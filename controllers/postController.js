@@ -7,6 +7,15 @@ const getAllPosts= async(req,res)=>{
     res.json(posts)
 }
 
+const getPostById= async(req,res)=>{
+    const {id}=req.params
+    const post= await Post.findById(id)
+    if(!post)
+        return res.status(400).send("Post not found")
+    return res.json(post)
+}
+
+
 const createPost= async (req,res)=>{
     const {title,body}=req.body
     if(!title)
@@ -43,4 +52,4 @@ const deletePost= async(req,res)=>{
         res.send(`Post with id ${id} deleted`)
 }
  
-module.exports= {getAllPosts,createPost,updatePost,deletePost}
+module.exports= {getAllPosts,getPostById,createPost,updatePost,deletePost}

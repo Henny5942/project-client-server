@@ -5,6 +5,7 @@ const postController=require("../controllers/postController")
 
 
 router.get("/",postController.getAllPosts)
+router.get("/:id", postController.getPostById)
 router.post("/",postController.createPost)
 router.put("/",postController.updatePost)
 router.delete("/:id",postController.deletePost)

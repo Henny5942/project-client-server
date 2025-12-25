@@ -6,12 +6,20 @@ const getAllPhotos= async (req,res)=>{
             return res.send("No photos")
         res.json(photos)
 }
+const getPhotoById= async(req,res)=>{
+    const {id}=req.params
+    const photo= await Photo.findById(id)
+    if(!photo)
+        return res.status(400).send("Photo not found")
+    return res.json(photo)
+}
+
 
 const createPhoto= async (req,res)=>{
     const {title, imageUrl}=req.body
         if(!title)
             return res.status(400).send("title is required")
-        const photo= await Photo.create({title,tags})
+        const photo= await Photo.create({title,imageUrl})
         if(!photo)
             return res.send("error")
         res.json(photo)
@@ -39,4 +47,4 @@ const deletePhoto= async(req,res)=>{
     res.send(`Photo with id ${id} deleted`)
 }
 
-module.exports= {getAllPhotos,createPhoto,updatePhoto,deletePhoto}
+module.exports= {getAllPhotos,getPhotoById,createPhoto,updatePhoto,deletePhoto}

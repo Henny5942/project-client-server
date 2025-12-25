@@ -7,6 +7,15 @@ const getAllUsers= async(req,res)=>{
     res.json(users)
 }
 
+const getUserById= async(req,res)=>{
+    const {id}=req.params
+    const user= await User.findById(id)
+    if(!user)
+        return res.status(400).send("User not found")
+    return res.json(user)
+}
+
+
 const createUser= async (req,res)=>{
     const {name,username,email, address, phone}=req.body
     if(!name || ! username)
@@ -45,4 +54,4 @@ const deleteUser= async(req,res)=>{
         res.send(`User with id ${id} deleted`)
 }
  
-module.exports= {getAllUsers,createUser,updateUser,deleteUser}
+module.exports= {getAllUsers,getUserById,createUser,updateUser,deleteUser}

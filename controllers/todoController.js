@@ -7,6 +7,14 @@ const getAllTodos= async (req,res)=>{
     res.json(todos)
 }
 
+const getTodoById= async(req,res)=>{
+    const {id}=req.params
+    const todo= await Todo.findById(id)
+    if(!todo)
+        return res.status(400).send("Todo not found")
+    return res.json(todo)
+}
+
 const createTodo= async (req,res)=>{
     const {title, tags}=req.body
     if(!title)
@@ -37,7 +45,7 @@ const updateTodo=async (req,res)=>{
     const todo= await Todo.findById(id)
     if(!todo)
         return res.status(400).send("not found")
-    todo.complete=complete
+    todo.completed=complete
     const newTodo=await todo.save()
     res.json(newTodo)
  }
@@ -51,4 +59,4 @@ const updateTodo=async (req,res)=>{
     res.send(`Todo with id ${id} deleted`)
  }
 
- module.exports = {getAllTodos,createTodo,updateTodo,updateTodoComplete,deleteTodo}
+ module.exports = {getAllTodos,getTodoById,createTodo,updateTodo,updateTodoComplete,deleteTodo}
